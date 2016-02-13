@@ -15,3 +15,8 @@ class abstractclassproperty(classproperty):
     """
 
     __isabstractmethod__ = True
+
+
+class abstractclassmethod(classmethod):
+    __isabstractmethod__ = True
+
