@@ -77,10 +77,9 @@ class Foldable(typing.Generic[Element], metaclass=abc.ABCMeta):
         return is_any(self, lambda left, right: left == right)
 
 
-
-
-
 Elm = typing.TypeVar('Elm')
+MonoidConstructor = 
+
 class MonoidicFoldable(Foldable[Elm], Monoid[Elm]):
     """This needs to inherit from Monoid, which will
     give it the methods 'mappend' and 'mempty'
@@ -88,7 +87,9 @@ class MonoidicFoldable(Foldable[Elm], Monoid[Elm]):
     def foldMap(self, function: MonoidConsructor) -> MonoidicFoldable:
         return self.foldr(function, initial=self.mempty())
 
-    # def foldMap()
+    def fold(self):
+        """
+        """
     
     # def fold()
 
