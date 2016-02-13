@@ -14,6 +14,7 @@ Inspired by @jbranchaud's TIL: https://github.com/jbranchaud/til
 ### Python
 
 - [LXML and the Problem of Tail Text](python/lxml-and-tail-text.md)
+- [Singletons & the Necessity of Metaclasses](python/singleton.md)
 
 ### Programming Tools
 

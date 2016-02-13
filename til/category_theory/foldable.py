@@ -14,6 +14,8 @@ import abc
 import typing
 
 from ..python.class_properties import abstractclassmethod
+from .monoid_stub import Monoid
+
 
 __all__ = (
     # Interfaces / Type-Classes
@@ -28,7 +30,7 @@ __all__ = (
 
 Element = typing.TypeVar('Element')
 OutType = typing.TypeVar('OutType')
-FoldingFunction = typing.Callable[Element, [OutType]]
+FoldingFunction = typing.Callable[[Element], OutType]
 
 
 class Foldable(typing.Generic[Element], metaclass=abc.ABCMeta):
@@ -38,8 +40,6 @@ class Foldable(typing.Generic[Element], metaclass=abc.ABCMeta):
     it in terms of foldr.
     I'm intentionally leaving off 'foldl' for reasons of brevity, because it deals with the
     concept of a reversable structure.
-
-    Trivial Observation: Self = Foldable[Element]
     """
     @abc.abstractmethod
     def foldr(self,
@@ -58,19 +58,20 @@ class Foldable(typing.Generic[Element], metaclass=abc.ABCMeta):
     def toList(self) -> typing.List[Element]:
         """
         This is revelatory of a more general idea - that you can convert a Foldable to a Monoid.
+        ... this is ListMonoid.mconcat(self)
         """
         return self.foldr(list.append, [])
 
     def null(self) -> bool:
         """Tests if the structure is empty."""
-        return self.foldr(lambda elm: False, True)
+        return self.foldr(lambda elm, accum: False, True)
 
     def length(self) -> int:
         """Determines the size of a finite structure
         by counting it. Note - in Python, if foldr is
         implemented this will be
         extremely inefficient."""
-        return self.foldr(lambda count: count+1, 0)
+        return self.foldr(lambda _, count: count+1, 0)
 
     def elem(self, element: Element) -> bool:
         """Asks if element occurs in the structure."""
@@ -78,19 +79,20 @@ class Foldable(typing.Generic[Element], metaclass=abc.ABCMeta):
 
 
 Elm = typing.TypeVar('Elm')
-MonoidConstructor = 
+MonoidConstructor = typing.Callable[[Elm], Monoid]
 
 class MonoidicFoldable(Foldable[Elm], Monoid[Elm]):
     """This needs to inherit from Monoid, which will
     give it the methods 'mappend' and 'mempty'
     """
-    def foldMap(self, function: MonoidConsructor) -> MonoidicFoldable:
+    def foldMap(self, function: MonoidConstructor) -> 'MonoidicFoldable':
         return self.foldr(function, initial=self.mempty())
 
     def fold(self):
+        """Fold up this data-structure, using the rules
+        of the monoid.
         """
-        """
-    
+        return self.foldr(self.mappend, self.mzero())
     # def fold()
 
 
@@ -121,8 +123,20 @@ def foldr(structure: Foldable[Element],
 
 class FoldableList(list, Foldable):
     def foldr(self,
-              function: typing.Callable[FoldableList, [OutType]],
-              initial: FoldableList) -> :
+              function: 'typing.Callable[FoldableList, [OutType]]',
+              initial: 'FoldableList'
+              ) -> 'FoldableList':
         accumulator = initial
         for elm in self:
-            function(elm, accumulator)
+            accumulator = function(elm, accumulator)
+        return accumulator
+
+fl = FoldableList([1, 2, 3, 4])
+print()
+print("fl:", type(fl), fl)
+print()
+import ipdb
+ipdb.set_trace()
+print()
+
+
