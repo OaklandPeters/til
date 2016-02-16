@@ -52,6 +52,8 @@ class Foldable(typing.Generic[Element], metaclass=abc.ABCMeta):
         (2) and standard/node.
         foldr is often implemented via recursion. In Python
         this will be extremely inefficient.
+
+        The initial value is also used as the type of the accumulator.
         """
         return NotImplemented
 
@@ -82,7 +84,8 @@ Elm = typing.TypeVar('Elm')
 MonoidConstructor = typing.Callable[[Elm], Monoid]
 
 class MonoidicFoldable(Foldable[Elm], Monoid[Elm]):
-    """This needs to inherit from Monoid, which will
+    """Foldability becomes more convenient with Monoids. First, because the initial (or accumulator) can be assumed to be the mzero value - this gives us the 'foldMap' function. Secondly, the mappend function defines a natural fold - this gives us the 'fold' function.
+    This needs to inherit from Monoid, which will
     give it the methods 'mappend' and 'mempty'
     """
     def foldMap(self, function: MonoidConstructor) -> 'MonoidicFoldable':
@@ -93,11 +96,6 @@ class MonoidicFoldable(Foldable[Elm], Monoid[Elm]):
         of the monoid.
         """
         return self.foldr(self.mappend, self.mzero())
-    # def fold()
-
-
-
-
 
 
 # ===========================
@@ -106,7 +104,6 @@ class MonoidicFoldable(Foldable[Elm], Monoid[Elm]):
 #        folds
 # ===========================
 
-
 def foldr(structure: Foldable[Element],
           function: FoldingFunction,
           initial: OutType
@@ -114,6 +111,14 @@ def foldr(structure: Foldable[Element],
     """Generic function version of 'foldr'."""
     return structure.foldr(function, initial)
 
+def foldMap(structure: typing.Intersection[Foldable[Element], Monoid[Element]],
+            function: FoldingFunction
+            ) -> OutType:
+    """
+    """
+    return structure.foldr(function, structure.mzero())
+
+def fold(structure: )
 
 # ===========================
 #   Concrete Implementations
