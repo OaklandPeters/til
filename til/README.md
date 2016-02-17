@@ -18,8 +18,9 @@ Inspired by @jbranchaud's TIL: https://github.com/jbranchaud/til
 
 ### Programming Tools
 
-- [Previewing Markdown](programming-tools/previewing-markdown.md)
+- [Previewing Markdown](programming_tools/previewing-markdown.md)
+- [Bash Commands](programming_tools/bash-keyboard-commands.md)
 
 ### Category Theory
 
-- [Examples of fmap for Various Monads](category-theory/fmap-examples-for-various-monads.py)
+- [Examples of fmap for Various Monads](category_theory/fmap-examples-for-various-monads.py)
