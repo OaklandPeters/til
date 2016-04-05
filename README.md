@@ -1,6 +1,6 @@
 # til
 
-Daily *That I Learned*, concise and small. Too small for a writeup, but worth recording. Both as a record of lessons learned, and as a developers journal.
+*That I Learned*, small concise lessons, learned and produced daily. Too small for a writeup, but worth recording. Both as a record of lessons learned, and as a developers journal.
 Inspired by @jbranchaud's TIL: https://github.com/jbranchaud/til 
 
 ### Categories
