@@ -21,6 +21,10 @@ Inspired by @jbranchaud's TIL: https://github.com/jbranchaud/til
 - [Previewing Markdown](til/programming_tools/previewing-markdown.md)
 - [Bash Commands](til/programming_tools/bash-keyboard-commands.md)
 
+### Vendor Software
+
+- [Mailchimp's Python API](til/vendor_software/mailchimp-python-api.md)
+
 ### Category Theory
 
 - [Examples of fmap for Various Monads](til/category_theory/fmap-examples-for-various-monads.py)
