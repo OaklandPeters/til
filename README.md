@@ -5,9 +5,12 @@ Inspired by @jbranchaud's TIL: https://github.com/jbranchaud/til
 
 ### Categories
 
-* [Programming Tools](til/programming_tools)
 * [Python](til/python)
+* [Django](til/django)
+* [Programming Tools](til/programming_tools)
 * [Category Theory](til/category_theory)
+* [Vendor Software](til/vendor_software)
+
 
 ----------
 
@@ -15,7 +18,10 @@ Inspired by @jbranchaud's TIL: https://github.com/jbranchaud/til
 
 - [LXML and the Problem of Tail Text](til/python/lxml-and-tail-text.md)
 - [Singletons & the Necessity of Metaclasses](til/python/singleton.md)
+
+### Django
 - [Advanced Django Queries with F and Q Objects](til/python/django-orm-f-and-q-objects.md)
+- [Atomic Transactions in Django](til/django/django-atomic-transactions.md)
 
 ### Programming Tools
 
@@ -29,3 +35,4 @@ Inspired by @jbranchaud's TIL: https://github.com/jbranchaud/til
 ### Category Theory
 
 - [Examples of fmap for Various Monads](til/category_theory/fmap-examples-for-various-monads.py)
+- [Static Typing Hates Categories](til/category_theory/static-typing-hates-categories.md)
