@@ -18,6 +18,7 @@ Inspired by @jbranchaud's TIL: https://github.com/jbranchaud/til
 
 - [LXML and the Problem of Tail Text](til/python/lxml-and-tail-text.md)
 - [Singletons & the Necessity of Metaclasses](til/python/singleton.md)
+- ['Counting Problems' & Logging Loops](til/python/counting-problems.md)
 
 ### Django
 - [Advanced Django Queries with F and Q Objects](til/python/django-orm-f-and-q-objects.md)
