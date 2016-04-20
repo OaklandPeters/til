@@ -11,7 +11,6 @@ Inspired by @jbranchaud's TIL: https://github.com/jbranchaud/til
 * [Category Theory](til/category_theory)
 * [Vendor Software](til/vendor_software)
 
-
 ----------
 
 ### Python
@@ -21,8 +20,9 @@ Inspired by @jbranchaud's TIL: https://github.com/jbranchaud/til
 - ['Counting Problems' & Logging Loops](til/python/counting-problems.md)
 
 ### Django
-- [Advanced Django Queries with F and Q Objects](til/python/django-orm-f-and-q-objects.md)
 - [Atomic Transactions in Django](til/django/django-atomic-transactions.md)
+- [Reverse Foreign Key Lookups and F Objects](til/django/django-reverse-foreign-key-and-f-objects.md)
+- [Advanced Django Queries with F and Q Objects](til/python/django-orm-f-and-q-objects.md)
 
 ### Programming Tools
 
