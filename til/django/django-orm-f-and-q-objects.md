@@ -16,6 +16,8 @@ Example model structure:
 
 ```python
 # My App models.py
+from django.db import models
+
 class STATUS:
     """Enum/Flag constants"""
     DRAFT = 0
@@ -23,7 +25,7 @@ class STATUS:
     SCHEDULED = 2
     LIVE = 3
 
-class Article:
+class Article(models.Model):
     status = models.IntegerField()  # flag - STATUS
     date_published = models.DateTimeField()
 
