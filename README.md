@@ -11,6 +11,8 @@ Inspired by @jbranchaud's TIL: https://github.com/jbranchaud/til
 * [Category Theory](til/category_theory)
 * [Vendor Software](til/vendor_software)
 
+To see this presented in a time-ordered fashion: [Time-Ordered TIL Lessons](time-ordered.md)
+
 ----------
 
 ### Python
@@ -18,6 +20,7 @@ Inspired by @jbranchaud's TIL: https://github.com/jbranchaud/til
 - [LXML and the Problem of Tail Text](til/python/lxml-and-tail-text.md)
 - [Singletons & the Necessity of Metaclasses](til/python/singleton.md)
 - ['Counting Problems' & Logging Loops](til/python/counting-problems.md)
+- [Class-Properties in Python 2.7](til/python/class-properties.md)
 
 ### Django
 - [Atomic Transactions in Django](til/django/django-atomic-transactions.md)
@@ -36,4 +39,7 @@ Inspired by @jbranchaud's TIL: https://github.com/jbranchaud/til
 ### Category Theory
 
 - [Examples of fmap for Various Monads](til/category_theory/fmap-examples-for-various-monads.py)
-- [Static Typing Hates Categories](til/category_theory/static-typing-hates-categories.md)
+- [Simple Static Typing Hates Categories](til/category_theory/simple-static-typing-hates-categories.md)
+- [Simple List Monad](til/category_theory/list-monad.md)
+- [Simple Tree Monad](til/category_theory/tree-monad.md)
+- [Simple Maybe Monad](til/category_theory/maybe-monad.md)

@@ -1,6 +1,6 @@
 # Class Properties
 
-To create getter properties on classes (which is very common in my Python implementation of category-theory concepts), the following can be used:
+To create getter properties on classes (which is very common in Pythons implementation of category-theory concepts), the following can be used:
 
 ```python3
 
@@ -24,4 +24,4 @@ class abstractclassproperty(classproperty):
 
 ```
 
-These are read-only, due to subtle issues with the way that getters and setters interact with metaclasses in Python.
+These are read-only, due to subtle issues with the way that getters and setters interact with metaclasses in Python. 

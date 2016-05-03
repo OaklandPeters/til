@@ -1,7 +1,10 @@
+# Simple Static Typing Hates Categories
 
 Categories are hard to statically type in most systems, because of cyclic dependencies in the structure of `Spaces` and `Categories`. Each `Category` needs to have exactly one defined `Element` class and one defined `Morphism` class, and each subclass of the `Element` and `Morphism` interfaces should have one defined `Category` that they belong to.
 
-Here is a specific example. Note that this do:
+Here is a specific example, given below. The intention is to show that the typing system of Python (and by extension that of similar classically OOP systems, such as Java or C#), cannot actually express the typing information of this sort of categorical structure.
+
+The reason for this is that categorical typing information is essentially that of a structural type system - and classical nomative static typing systems (such as that used in Java, C#, or Python 3.5) - cannot capture this information. For example, for the base class `Category`, we essentially want Category to be a Generic class (on parameters `Element` and `Morphism`), to provide these concrete Element/Morphism classes as a class-property on the concrete Category, and that the functions `call` and `apply` should return an instance of the type of `Element` (I've chosen to write this as a forward-ref `cls.Element`).
 
 
 ```python3
