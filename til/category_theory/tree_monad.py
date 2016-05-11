@@ -1,4 +1,4 @@
-from list_monad import List
+from .list_monad import List
 
 
 class Tree:
@@ -62,7 +62,7 @@ class Tree:
     def map(self, function):
         cls = type(self)
         return cls(
-            function(self),
+            function(self.value),
             List(function(elm) for elm in self.children)
         )
 

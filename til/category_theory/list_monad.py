@@ -106,3 +106,9 @@ class List:
             self.__class__.__name__,
             ", ".join(repr(elm) for elm in self)
         )
+
+    #------------------------------------------------
+    #   Python list functions
+    #------------------------------------------------
+    def index(self, value):
+        return self.values.index(value)

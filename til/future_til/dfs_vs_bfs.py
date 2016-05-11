@@ -3,196 +3,199 @@ Goal:    write breadth-first-search and depth-first-search as differing only by 
 """
 import types
 
+from ..category_theory.list_monad import List
+from ..category_theory.tree_monad import Tree
 
-class List:
-    """
-    append
-    map
-    join
-    filter
-    """
-    def __init__(self, values=None):
-        if values is None:
-            self.values = []
-        else:
-            self.values = [elm for elm in values]
 
-    def __repr__(self):
-        return str.format(
-            "{0}[{1}]",
-            self.__class__.__name__,
-            ", ".join(repr(elm) for elm in self)
-        )
+# class List:
+#     """
+#     append
+#     map
+#     join
+#     filter
+#     """
+#     def __init__(self, values=None):
+#         if values is None:
+#             self.values = []
+#         else:
+#             self.values = [elm for elm in values]
 
-    @classmethod
-    def zero(cls):
-        return cls()
+#     def __repr__(self):
+#         return str.format(
+#             "{0}[{1}]",
+#             self.__class__.__name__,
+#             ", ".join(repr(elm) for elm in self)
+#         )
 
-    def __iter__(self):
-        return iter(self.values)
+#     @classmethod
+#     def zero(cls):
+#         return cls()
 
-    def append(self, other):
-        return type(self)([elm for array in (self, other) for elm in array])
+#     def __iter__(self):
+#         return iter(self.values)
+
+#     def append(self, other):
+#         return type(self)([elm for array in (self, other) for elm in array])
     
-    def map(self, function):
-        return type(self)(function(elm) for elm in self)
+#     def map(self, function):
+#         return type(self)(function(elm) for elm in self)
 
-    @classmethod
-    def _traverse(cls, elm, function):
-        if isinstance(elm, cls):
-            return elm.traverse(function)
-        else:
-            return function(elm)
+#     @classmethod
+#     def _traverse(cls, elm, function):
+#         if isinstance(elm, cls):
+#             return elm.traverse(function)
+#         else:
+#             return function(elm)
     
-    def traverse(self, function):
-        # return type(self)(self._traverse(elm, function) for elm in self)
-        return type(self)(self.map(lambda elm: self._traverse(elm, function)))
+#     def traverse(self, function):
+#         # return type(self)(self._traverse(elm, function) for elm in self)
+#         return type(self)(self.map(lambda elm: self._traverse(elm, function)))
 
 
-    def filter(self, function):
-        return type(self)(elm for elm in self if function(elm))
+#     def filter(self, function):
+#         return type(self)(elm for elm in self if function(elm))
 
-    def join(self):
-        cls = type(self)
-        accumulator = cls.zero()
-        for elm in self:
-            if isinstance(elm, cls):
-                accumulator = accumulator.append(elm)
-            else:
-                accumulator = accumulator.append(cls([elm]))
-        return accumulator
+#     def join(self):
+#         cls = type(self)
+#         accumulator = cls.zero()
+#         for elm in self:
+#             if isinstance(elm, cls):
+#                 accumulator = accumulator.append(elm)
+#             else:
+#                 accumulator = accumulator.append(cls([elm]))
+#         return accumulator
 
-    # list magic methods
-    def __len__(self):
-        return len(self.values)
+#     # list magic methods
+#     def __len__(self):
+#         return len(self.values)
 
-    def __contains__(self, value):
-        return value in self.values
+#     def __contains__(self, value):
+#         return value in self.values
 
-    def __getitem__(self, index):
-        return self.values[index]
+#     def __getitem__(self, index):
+#         return self.values[index]
 
-    def __eq__(self, other):
-        if type(self) != type(other):
-            return False
-        elif len(self) != len(other):
-            return False
-        else:
-            for left, right in zip(self, other):
-                # This step may recurse when left is a List
-                if left != right:
-                    return False
-            return True
+#     def __eq__(self, other):
+#         if type(self) != type(other):
+#             return False
+#         elif len(self) != len(other):
+#             return False
+#         else:
+#             for left, right in zip(self, other):
+#                 # This step may recurse when left is a List
+#                 if left != right:
+#                     return False
+#             return True
 
-    def __ne__(self, other):
-        return not (self == other)
+#     def __ne__(self, other):
+#         return not (self == other)
 
-    @classmethod
-    def recurse(cls, function):
-        def wrapper(element):
-            if isinstance(element, cls):
-                return wrapper(element)
-            else:
-                return function(element)
-        return wrapper
-
-
+#     @classmethod
+#     def recurse(cls, function):
+#         def wrapper(element):
+#             if isinstance(element, cls):
+#                 return wrapper(element)
+#             else:
+#                 return function(element)
+#         return wrapper
 
 
-class Node:
-    value = None
-    children = []
-
-    def __init__(self, value=None, children=None):
-        self.value = value
-
-        if children is None:
-            self.children = List.zero()
-        else:
-            self.children = List([elm for elm in children])
-
-    def __repr__(self):
-        return str.format(
-            "{0}({1}, {2})",
-            self.__class__.__name__,
-            repr(self.value),
-            repr(self.children)
-        )
 
 
-    @classmethod
-    def zero(cls):
-        return cls()
+# class Node:
+#     value = None
+#     children = []
 
-    def __iter__(self):
-        return iter(self.children)
+#     def __init__(self, value=None, children=None):
+#         self.value = value
 
-    def append(self, other):
-        cls = type(self)
-        accumulator = (List
-                       .zero()
-                       .append(self.children)
-                       .append(List([other.value]))
-                       .append(other.children)
-        )
-        return cls(self.value, accumulator)
+#         if children is None:
+#             self.children = List.zero()
+#         else:
+#             self.children = List([elm for elm in children])
 
-    def join(self):
-        cls = type(self)
-        accumulator = cls.zero()
-        for elm in self:
-            if isinstance(elm, cls):
-                accumulator = accumulator.append(elm)
-            else:
-                accumulator = accumulator.append(cls(elm))
-        return cls(self.value, accumulator)
+#     def __repr__(self):
+#         return str.format(
+#             "{0}({1}, {2})",
+#             self.__class__.__name__,
+#             repr(self.value),
+#             repr(self.children)
+#         )
 
-    def filter(self, function):
-        """Applies to children"""
-        cls = type(self)
-        accumulator = cls.zero()
-        for child in self.children:
-            if function(child):
-                accumulator = accumulator.append(child)
-        return cls(self.value, *accumulator)
 
-    def map(self, function):
-        cls = type(self)
-        return cls(
-            function(self),
-            List(function(elm) for elm in self.children)
-        )
+#     @classmethod
+#     def zero(cls):
+#         return cls()
 
-    @classmethod
-    def _traverse(cls, elm, function):
-        if isinstance(elm, cls):
-            return elm.traverse(function)
-        elif isinstance(elm, List):
-            return elm.traverse(function)
-        else:
-            return function(elm)
+#     def __iter__(self):
+#         return iter(self.children)
+
+#     def append(self, other):
+#         cls = type(self)
+#         accumulator = (List
+#                        .zero()
+#                        .append(self.children)
+#                        .append(List([other.value]))
+#                        .append(other.children)
+#         )
+#         return cls(self.value, accumulator)
+
+#     def join(self):
+#         cls = type(self)
+#         accumulator = cls.zero()
+#         for elm in self:
+#             if isinstance(elm, cls):
+#                 accumulator = accumulator.append(elm)
+#             else:
+#                 accumulator = accumulator.append(cls(elm))
+#         return cls(self.value, accumulator)
+
+#     def filter(self, function):
+#         """Applies to children"""
+#         cls = type(self)
+#         accumulator = cls.zero()
+#         for child in self.children:
+#             if function(child):
+#                 accumulator = accumulator.append(child)
+#         return cls(self.value, *accumulator)
+
+#     def map(self, function):
+#         cls = type(self)
+#         return cls(
+#             function(self),
+#             List(function(elm) for elm in self.children)
+#         )
+
+#     @classmethod
+#     def _traverse(cls, elm, function):
+#         if isinstance(elm, cls):
+#             return elm.traverse(function)
+#         elif isinstance(elm, List):
+#             return elm.traverse(function)
+#         else:
+#             return function(elm)
     
-    def traverse(self, function):
-        # cls = type(self)
-        # return cls(
-        #     function(self.value),
-        #     List(cls._traverse(elm, function) for elm in self.children)
-        # )
-        return self.map(lambda elm: self._traverse(elm, function))
+#     def traverse(self, function):
+#         # cls = type(self)
+#         # return cls(
+#         #     function(self.value),
+#         #     List(cls._traverse(elm, function) for elm in self.children)
+#         # )
+#         return self.map(lambda elm: self._traverse(elm, function))
 
-    def __eq__(self, other):
-        if type(self) != type(other):
-            return False
-        elif self.value != other.value:
-            return False
-        elif len(self.children) != len(other.children):
-            return False
-        else:
-            for left, right in zip(self.children, other.children):
-                # This step may recurse when left is a List
-                if left != right:
-                    return False
-            return True
+#     def __eq__(self, other):
+#         if type(self) != type(other):
+#             return False
+#         elif self.value != other.value:
+#             return False
+#         elif len(self.children) != len(other.children):
+#             return False
+#         else:
+#             for left, right in zip(self.children, other.children):
+#                 # This step may recurse when left is a List
+#                 if left != right:
+#                     return False
+#             return True
 
 
 #
@@ -216,14 +219,18 @@ def iterator_traversal(node, function=identity):
     for child in node.children:
         yield from iterator_traversal(child, function)
 
-def tree_nodes_iter(tree):
+def tree_nodes_value_iter(tree):
     """~ BFS flat iterator for a tree.
     @todo: Write this with .traverse
     """
     yield tree.value
     for node in tree.children:
-        yield from tree_nodes_iter(node)
+        yield from tree_nodes_value_iter(node)
 
+def tree_notes_iter(tree):
+    yield tree
+    for node in tree.children:
+        yield from tree_notes_iter
 
 
 
@@ -260,35 +267,35 @@ def last_char_is_even(word):
 
 
 
-explicit = Node('0', [
-    Node('0-0', [
-        Node('0-0-0', [
-            Node('0-0-0-0'),
-            Node('0-0-0-1'),
+explicit = Tree('0', [
+    Tree('0-0', [
+        Tree('0-0-0', [
+            Tree('0-0-0-0'),
+            Tree('0-0-0-1'),
         ]),
-        Node('0-0-1'),
-        Node('0-0-2', [
-            Node('0-0-2-0'),
-            Node('0-0-2-1'),
-            Node('0-0-2-2'),
+        Tree('0-0-1'),
+        Tree('0-0-2', [
+            Tree('0-0-2-0'),
+            Tree('0-0-2-1'),
+            Tree('0-0-2-2'),
         ])
     ]),
-    Node('0-1'),
-    Node('0-2', [
-         Node('0-2-0')
+    Tree('0-1'),
+    Tree('0-2', [
+         Tree('0-2-0')
     ]),
 ])
-tree = Node(inc(), [
-    Node(inc(), [
-        Node(inc(), [
-            Node(inc()),
-            Node(inc()),
+tree = Tree(inc(), [
+    Tree(inc(), [
+        Tree(inc(), [
+            Tree(inc()),
+            Tree(inc()),
         ]),
-        Node(inc(), []),
+        Tree(inc(), []),
     ]),
-    Node(inc(), []),
-    Node(inc(), [
-         Node(inc(), [])
+    Tree(inc(), []),
+    Tree(inc(), [
+         Tree(inc(), [])
     ]),
 ])
 
@@ -323,7 +330,8 @@ def BFS(node, check):
             .map(lambda child: child.value)
         )
         .append(
-            node.
+            node.children
+            .map(lambda child: BFS(child, check))
         )
     )
     # return (
@@ -355,7 +363,7 @@ def pre_merge(node):
     )
 
 def post_merge(node):
-    return _post_merge(Node('None', [node]))
+    return _post_merge(Tree('None', [node]))
 
 def _post_merge(node):
     """This approximately gets the ordering correct of BFS, 
@@ -391,7 +399,7 @@ bfs_result = BFS(explicit, lambda x: True)
 #
 bush = tree.map(identity)
 
-twig = Node(1, [Node(2), Node(3)])
+twig = Tree(1, [Tree(2), Tree(3)])
 twiggy = twig.map(identity)
 ttwiggy = twig.traverse(identity)
 twiggy_plus2 = twig.traverse(add2)
@@ -408,6 +416,7 @@ tthingy = thing.traverse(identity)
 
 #d_result = DFS(tree, is_odd)
 #b_result = BFS(tree, is_odd)
+
 
 
 pre = pre_merge(explicit)
@@ -428,9 +437,48 @@ print()
 
 import unittest
 
-class NodeTests(unittest.TestCase):
+class TreeTests(unittest.TestCase):
+    explicit = Tree('0', [
+        Tree('0-0', [
+            Tree('0-0-0', [
+                Tree('0-0-0-0'),
+                Tree('0-0-0-1'),
+            ]),
+            Tree('0-0-1'),
+            Tree('0-0-2', [
+                Tree('0-0-2-0'),
+                Tree('0-0-2-1'),
+                Tree('0-0-2-2'),
+            ])
+        ]),
+        Tree('0-1'),
+        Tree('0-2', [
+             Tree('0-2-0')
+        ])
+    ])
+
     def test_join(self):
         self.assertEqual(
-            Node(1, List([Node(3, List([4, 5]))])),
-            Node(1, List([3, 4, 5]))
+            Tree(1, List([Tree(3, List([4, 5]))])),
+            Tree(1, List([3, 4, 5]))
         )
+
+    def test_dfs(self):
+        dfs_expected = List[
+            '0', '0-0', '0-0-0', '0-0-0-0', '0-0-0-1', 
+            '0-0-1', '0-0-2', '0-0-2-0', '0-0-2-1',
+            '0-0-2-2', '0-1', '0-2', '0-2-0']
+        self.assertEqual(
+            dfs_expected, DFS(self.explicit, lambda self: True)
+        )
+
+    # def test_bfs(self):
+    #     bfs_expected = List()
+    #     self.assertEqual(
+    #         bfs_expected, BFS(self.explicit, lambda self: True)
+    #     )
+
+
+
+
+
