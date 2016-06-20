@@ -21,6 +21,8 @@ To see this presented in a time-ordered fashion: [Time-Ordered TIL Lessons](time
 - [Singletons & the Necessity of Metaclasses](til/python/singleton.md)
 - ['Counting Problems' & Logging Loops](til/python/counting-problems.md)
 - [Class-Properties in Python 2.7](til/python/class-properties.md)
+- [Atomic Non Iterables](til/python/atomic.py)
+- [Copy Semantics](til/python/copy_semantics.py)
 
 ### Django
 
