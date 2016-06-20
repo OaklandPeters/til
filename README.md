@@ -23,6 +23,7 @@ To see this presented in a time-ordered fashion: [Time-Ordered TIL Lessons](time
 - [Class-Properties in Python 2.7](til/python/class-properties.md)
 
 ### Django
+
 - [Atomic Transactions in Django](til/django/django-atomic-transactions.md)
 - [Reverse Foreign Key Lookups and F Objects](til/django/django-reverse-foreign-key-and-f-objects.md)
 - [Advanced Django Queries with F and Q Objects](til/python/django-orm-f-and-q-objects.md)
@@ -31,6 +32,7 @@ To see this presented in a time-ordered fashion: [Time-Ordered TIL Lessons](time
 
 - [Previewing Markdown](til/programming_tools/previewing-markdown.md)
 - [Bash Commands](til/programming_tools/bash-keyboard-commands.md)
+- [Writing Command Output to Bash in Shell](til/programming_tools/bash-write-output-to-file.md)
 
 ### Vendor Software
 
